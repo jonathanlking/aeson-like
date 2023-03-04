@@ -1,6 +1,6 @@
 # `aeson-like`
 
-[![Build Status](https://travis-ci.org/jmackie/aeson-like.svg?branch=master)](https://travis-ci.org/jmackie/aeson-like)
+![Build Status](https://github.com/jonathanlking/aeson-like/actions/workflows/ci.yml/badge.svg)
 
 A collection of things I've found useful when developing against
 third-party/vendor/non-haskell JSON APIs.
