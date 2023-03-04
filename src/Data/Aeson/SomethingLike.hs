@@ -58,7 +58,7 @@ import qualified Data.Aeson as Aeson
 -- And we can serialize the original json (e.g. to a log):
 --
 -- >>> print (Aeson.encode planet)
--- "{\"name\":\"Tatooine\",\"climate\":\"Arid\",\"gravity\":\"1\"}"
+-- "{\"climate\":\"Arid\",\"name\":\"Tatooine\",\"gravity\":\"1\"}"
 -- >>> Aeson.encode planet == json
 -- True
 -- 
