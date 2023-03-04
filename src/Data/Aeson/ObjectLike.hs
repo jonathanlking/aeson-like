@@ -1,4 +1,5 @@
 {-# LANGUAGE AllowAmbiguousTypes        #-}
+{-# LANGUAGE CPP                        #-}
 {-# LANGUAGE DataKinds                  #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE DeriveTraversable          #-}
@@ -28,13 +29,18 @@ import           Control.Applicative (liftA2)
 import qualified Data.Aeson          as Aeson
 import qualified Data.Aeson.Types    as Aeson (Parser)
 import           Data.Hashable       (Hashable)
-import qualified Data.HashMap.Strict as HashMap
 import           Data.Kind           (Type)
 import           Data.Proxy          (Proxy(..))
-import qualified Data.Text           as Text
+import           Data.String         (fromString)
 import           Data.Typeable       (Typeable, typeOf)
 import           GHC.Generics
 import           GHC.TypeLits        (KnownSymbol, Symbol, symbolVal)
+
+#if MIN_VERSION_aeson(2,0,0)
+import qualified Data.Aeson.KeyMap   as KeyMap
+#else
+import qualified Data.HashMap.Strict as KeyMap
+#endif
 
 -- $setup
 -- >>> :set -XDeriveGeneric
@@ -114,15 +120,15 @@ instance (FromObject f, FromObject g) => FromObject (f :*: g) where
 
 instance (KnownSymbol key, Aeson.FromJSON a) => FromObject (Rec0 (Prop key (Maybe a))) where
   fromObject obj = K1 . Prop <$> obj Aeson..:? key
-    where key = Text.pack $ symbolVal (Proxy @key)
+    where key = fromString $ symbolVal (Proxy @key)
 
 instance {-# iNCoHErEnt #-} (KnownSymbol key, Aeson.FromJSON a) => FromObject (Rec0 (Prop key a)) where
   fromObject obj = K1 . Prop <$> obj Aeson..: key
-    where key = Text.pack $ symbolVal (Proxy @key)
+    where key = fromString $ symbolVal (Proxy @key)
 
 instance FromObject U1 where
   fromObject obj
-    | HashMap.null obj = pure U1
+    | KeyMap.null obj = pure U1
     | otherwise = fail "expecting an empty object"
 
 class ToObject (f :: Type -> Type) where
@@ -135,11 +141,11 @@ instance (ToObject f, ToObject g) => ToObject (f :*: g) where
   toObject (f :*: g) = toObject f <> toObject g
 
 instance (KnownSymbol key, Aeson.ToJSON a) => ToObject (Rec0 (Prop key a)) where
-  toObject (K1 (Prop a)) = HashMap.singleton key (Aeson.toJSON a)
-    where key = Text.pack $ symbolVal (Proxy @key)
+  toObject (K1 (Prop a)) = KeyMap.singleton key (Aeson.toJSON a)
+    where key = fromString $ symbolVal (Proxy @key)
 
 instance ToObject U1 where
-  toObject U1 = HashMap.empty
+  toObject U1 = KeyMap.empty
 
 typeName :: forall a. Typeable a => String
 typeName = show (typeOf (undefined :: a))
