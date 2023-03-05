@@ -47,7 +47,7 @@ import qualified Data.Aeson as Aeson
 -- In reality we expect the API to give us more data than this, and we don't 
 -- want to drop that data on the floor, so we decode into a 'SomethingLike' @Planet@
 -- 
--- >>> let json = "{\"name\":\"Tatooine\",\"climate\":\"Arid\",\"gravity\":\"1\"}"
+-- >>> let json = "{\"climate\":\"Arid\",\"gravity\":\"1\",\"name\":\"Tatooine\"}"
 -- >>> let planet = Aeson.decode @(SomethingLike Planet) json & fromJust
 --
 -- We can then 'unwrap' the part of that data we understand:

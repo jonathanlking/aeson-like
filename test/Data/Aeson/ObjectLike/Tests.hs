@@ -56,7 +56,7 @@ unitTests = Tasty.testGroup "unit tests"
 
   , Tasty.HUnit.testCase "empty Patchy encodes to nulls" $
       Aeson.encode (Patchy (Prop @"foo" Nothing) (Prop @"bar" Nothing)) 
-        @=? "{\"foo\":null,\"bar\":null}"
+        @=? "{\"bar\":null,\"foo\":null}"
 
   , Tasty.HUnit.testCase "Units decodes as expected" $
       -- NOTE: aeson represents () as an empty array
@@ -98,7 +98,7 @@ exampleUser =
 --User { userId = Prop 1, userName = Prop "Foo Bar" }
 
 exampleUserEncoded :: LBS.ByteString
-exampleUserEncoded = "{\"name\":\"Foo Bar\",\"id\":1}"
+exampleUserEncoded = "{\"id\":1,\"name\":\"Foo Bar\"}"
 
 newtype Token = Token (Prop "token" String)
   deriving stock (Generic, Eq, Show)
