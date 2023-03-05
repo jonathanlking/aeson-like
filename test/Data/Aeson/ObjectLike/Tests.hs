@@ -77,12 +77,12 @@ unitTests = Tasty.testGroup "unit tests"
   , Tasty.HUnit.testCase "Stub encodes as expected" $
       Aeson.encode Stub @=? "{}"
 
---  , Tasty.HUnit.testCase "decoding errors are helpful" $
---      case Aeson.eitherDecode "{\"names\":\"Foo Bar\",\"id\":1}" of
---        Right (_ :: User) -> Tasty.HUnit.assertFailure "decoding should have failed"
---        Left err ->
---          Tasty.HUnit.assertBool ("error mentions the missing key: " <> err)
---            (err `contains` "key \"name\" not present")
+  , Tasty.HUnit.testCase "decoding errors are helpful" $
+      case Aeson.eitherDecode "{\"names\":\"Foo Bar\",\"id\":1}" of
+        Right (_ :: User) -> Tasty.HUnit.assertFailure "decoding should have failed"
+        Left err ->
+          Tasty.HUnit.assertBool ("error mentions the missing key: " <> err)
+            (err `contains` "key \"name\" not present")
   ]
 
 data User = User
