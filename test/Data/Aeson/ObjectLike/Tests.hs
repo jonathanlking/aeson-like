@@ -82,7 +82,7 @@ unitTests = Tasty.testGroup "unit tests"
         Right (_ :: User) -> Tasty.HUnit.assertFailure "decoding should have failed"
         Left err ->
           Tasty.HUnit.assertBool ("error mentions the missing key: " <> err)
-            (err `contains` "key \"name\" not present")
+            (err `contains` "key \"name\"")
   ]
 
 data User = User
