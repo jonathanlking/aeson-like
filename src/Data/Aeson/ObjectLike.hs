@@ -147,5 +147,5 @@ instance (KnownSymbol key, Aeson.ToJSON a) => ToObject (Rec0 (Prop key a)) where
 instance ToObject U1 where
   toObject U1 = KeyMap.empty
 
-typeName :: forall a. Typeable a => String
+typeName :: forall (a :: Type). Typeable a => String
 typeName = show (typeOf (undefined :: a))
