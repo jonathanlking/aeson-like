@@ -73,7 +73,7 @@ import qualified Data.HashMap.Strict as KeyMap
 -- >>> let stats = PowerStats (Prop "26") (Prop "27") (Prop "47") (Prop "100")
 -- >>> let json = Aeson.encode stats
 -- >>> json
--- "{\"strength\":\"26\",\"power\":\"47\",\"speed\":\"27\",\"combat\":\"100\"}"
+-- "{\"combat\":\"100\",\"power\":\"47\",\"speed\":\"27\",\"strength\":\"26\"}"
 -- >>> Aeson.decode @PowerStats json
 -- Just (PowerStats {strengthStat = "26", speedStat = "27", powerStat = "47", combatStat = "100"})
 --
