@@ -1,5 +1,4 @@
 {-# LANGUAGE AllowAmbiguousTypes        #-}
-{-# LANGUAGE CPP                        #-}
 {-# LANGUAGE DataKinds                  #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE DeriveTraversable          #-}
@@ -28,6 +27,7 @@ import           Prelude
 import           Control.Applicative (liftA2)
 import qualified Data.Aeson          as Aeson
 import qualified Data.Aeson.Types    as Aeson (Parser)
+import qualified Data.Aeson.KeyMap   as KeyMap
 import           Data.Hashable       (Hashable)
 import           Data.Kind           (Type)
 import           Data.Proxy          (Proxy(..))
@@ -35,12 +35,6 @@ import           Data.String         (fromString)
 import           Data.Typeable       (Typeable, typeOf)
 import           GHC.Generics
 import           GHC.TypeLits        (KnownSymbol, Symbol, symbolVal)
-
-#if MIN_VERSION_aeson(2,0,0)
-import qualified Data.Aeson.KeyMap   as KeyMap
-#else
-import qualified Data.HashMap.Strict as KeyMap
-#endif
 
 -- $setup
 -- >>> :set -XDeriveGeneric
