@@ -19,7 +19,11 @@ category: Network
 extra-source-files:
   README.md
 tested-with:
-  GHC==8.6.4
+  GHC==9.8.2
+  GHC==9.6.5
+  GHC==9.4.8
+  GHC==9.2.8
+  GHC==9.0.2
 
 source-repository head
   type: git
@@ -35,7 +39,7 @@ library
     Data.Aeson.SomethingLike
   build-depends:
     base >= 4.12 && < 5,
-    aeson >=1.4.2 && <1.6 || >=2.0 && <2.2,
+    aeson >=2.0 && <2.4,
     hashable,
     text,
     unordered-containers,
